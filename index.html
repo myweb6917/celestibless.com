@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProveMeWrong — Beat Procrastination for Good</title>
+    <meta name="description" content="ProveMeWrong helps you overcome procrastination with science-backed techniques. Track habits, set challenges, and prove your doubts wrong.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0B0F1A;
+            --bg-card: #141929;
+            --bg-card-hover: #1A2038;
+            --accent: #FF6B35;
+            --accent-glow: rgba(255, 107, 53, 0.25);
+            --text: #E8ECF4;
+            --text-muted: #8892A8;
+            --text-dim: #5A6478;
+            --border: rgba(255,255,255,0.06);
+            --gradient-1: linear-gradient(135deg, #FF6B35 0%, #FF3864 100%);
+            --gradient-2: linear-gradient(135deg, #141929 0%, #1E2744 100%);
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 1.25rem 2rem;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(11,15,26,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900; font-size: 1.35rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a {
+            font-size: 0.9rem; color: var(--text-muted);
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            background: var(--gradient-1) !important;
+            color: #fff !important;
+            padding: 0.55rem 1.4rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            top: 10%; left: 50%; transform: translateX(-50%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            animation: fadeUp 0.8s ease;
+        }
+        .hero-badge span {
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100%{ opacity:1; } 50%{ opacity:0.4; } }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            max-width: 800px;
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.8s ease 0.1s both;
+        }
+        .hero h1 em {
+            font-style: normal;
+            background: var(--gradient-1);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin-bottom: 2.5rem;
+            animation: fadeUp 0.8s ease 0.2s both;
+        }
+        .hero-buttons {
+            display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+            animation: fadeUp 0.8s ease 0.3s both;
+        }
+        .btn-primary {
+            background: var(--gradient-1);
+            color: #fff;
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-flex; align-items: center; gap: 0.6rem;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px var(--accent-glow);
+        }
+        .btn-secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .btn-secondary:hover { background: var(--bg-card-hover); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── FEATURES ── */
+        section { padding: 6rem 2rem; }
+        .section-label {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: var(--gradient-2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,107,53,0.3);
+        }
+        .feature-icon {
+            width: 48px; height: 48px;
+            background: var(--accent-glow);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+        }
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        /* ── HOW IT WORKS ── */
+        .steps {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex; flex-direction: column; gap: 2rem;
+        }
+        .step {
+            display: flex; gap: 1.5rem; align-items: flex-start;
+        }
+        .step-num {
+            min-width: 48px; height: 48px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .step h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        .step p { color: var(--text-muted); font-size: 0.92rem; }
+
+        /* ── CTA ── */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+        .cta-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--gradient-2);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3.5rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            top: -100px; right: -100px;
+            pointer-events: none;
+        }
+        .cta-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .cta-box p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .footer-links {
+            display: flex; gap: 2rem; justify-content: center;
+            margin-bottom: 1.5rem; flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: var(--text); }
+        .footer-copy {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+
+        /* ── MOBILE ── */
+        .mobile-menu-btn {
+            display: none;
+            background: none; border: none;
+            color: var(--text); font-size: 1.5rem;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .hero h1 { font-size: 2.4rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            section { padding: 4rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="index.html" class="nav-logo">ProveMeWrong</a>
+    <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how">How It Works</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="#download" class="nav-cta">Download</a>
+    </div>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'" aria-label="Toggle menu">☰</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge"><span></span> Now available on iOS</div>
+    <h1>Stop Stalling. <em>Start Proving.</em></h1>
+    <p>ProveMeWrong turns procrastination into a game you can win. Set challenges, track streaks, and prove your inner doubts wrong — one task at a time.</p>
+    <div class="hero-buttons">
+        <a href="#download" class="btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download for iOS
+        </a>
+        <a href="#features" class="btn-secondary">Learn More</a>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">Everything you need to beat procrastination</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Challenge Mode</h3>
+            <p>Set bold daily or weekly challenges. Your inner critic says you can't? Prove it wrong with action.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔥</div>
+            <h3>Streak Tracking</h3>
+            <p>Build unstoppable momentum with visual streaks. Watch your consistency compound over time.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Progress Insights</h3>
+            <p>Data-driven reports on your productivity patterns. Understand when and why you procrastinate.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>Smart Nudges</h3>
+            <p>Science-backed reminders timed to your peak focus windows. No spam — just the right push.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🏆</div>
+            <h3>Milestone Rewards</h3>
+            <p>Earn achievements as you conquer tasks. Celebrate the wins that your procrastinating self said were impossible.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Private & Secure</h3>
+            <p>Your productivity data stays yours. End-to-end encryption with full transparency on data usage.</p>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background: var(--bg-card);">
+    <p class="section-label">How It Works</p>
+    <h2 class="section-title">Three steps to a procrastination-free life</h2>
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div>
+                <h3>Set Your Challenge</h3>
+                <p>Pick a task you've been avoiding. Set a deadline and declare: "Prove me wrong."</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div>
+                <h3>Take Action</h3>
+                <p>Break it into bite-sized steps. Check them off, build your streak, and gain momentum.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div>
+                <h3>Celebrate & Repeat</h3>
+                <p>Review your wins, unlock milestones, and set the next challenge. The cycle of action begins.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="download">
+    <div class="cta-box">
+        <h2>Ready to prove yourself wrong?</h2>
+        <p>Download ProveMeWrong today and start turning procrastination into progress.</p>
+        <a href="#" class="btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download on the App Store
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="support.html">Support</a>
+        <a href="mailto:brandon@celestibless.com">Contact</a>
+    </div>
+    <p class="footer-copy">&copy; 2025 CelestiBless Co., Ltd. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support — ProveMeWrong</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0B0F1A;
+            --bg-card: #141929;
+            --bg-card-hover: #1A2038;
+            --accent: #FF6B35;
+            --accent-glow: rgba(255,107,53,0.25);
+            --text: #E8ECF4;
+            --text-muted: #8892A8;
+            --text-dim: #5A6478;
+            --border: rgba(255,255,255,0.06);
+            --gradient-1: linear-gradient(135deg, #FF6B35 0%, #FF3864 100%);
+            --gradient-2: linear-gradient(135deg, #141929 0%, #1E2744 100%);
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        nav {
+            padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid var(--border); background: rgba(11,15,26,0.95);
+            backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 100;
+        }
+        .nav-logo { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.35rem; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-back { color: var(--text-muted); font-size: 0.9rem; }
+        .nav-back:hover { color: var(--text); text-decoration: none; }
+
+        .support-page { max-width: 760px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+
+        .support-hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .support-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            margin-bottom: 0.8rem;
+        }
+        .support-hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Contact Card */
+        .contact-card {
+            background: var(--gradient-2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            top: -60px; right: -60px;
+            pointer-events: none;
+        }
+        .contact-card h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .contact-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .contact-method {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        .contact-method:hover { border-color: rgba(255,107,53,0.3); }
+        .contact-method .icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+        .contact-method h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .contact-method p { color: var(--text-muted); font-size: 0.85rem; margin: 0; }
+        .contact-method a { color: var(--accent); font-size: 0.85rem; }
+
+        /* Contact Form */
+        .contact-form {
+            background: var(--gradient-2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        .contact-form h2 {
+            font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem;
+        }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--text-muted);
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-group select option { background: var(--bg-card); }
+        .form-submit {
+            background: var(--gradient-1);
+            color: #fff;
+            border: none;
+            padding: 0.85rem 2rem;
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        /* FAQ */
+        .faq-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .faq-item {
+            background: var(--gradient-2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
+        .faq-q {
+            padding: 1.2rem 1.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        .faq-q:hover { background: var(--bg-card-hover); }
+        .faq-q::after { content: '+'; font-size: 1.2rem; color: var(--accent); transition: transform 0.3s; }
+        .faq-item.open .faq-q::after { transform: rotate(45deg); }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-a-inner {
+            padding: 0 1.5rem 1.2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .faq-item.open .faq-a { max-height: 300px; }
+
+        footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--text-dim); font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .support-page { padding: 3rem 1.5rem 4rem; }
+            .contact-card, .contact-form { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">ProveMeWrong</a>
+    <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<main class="support-page">
+    <div class="support-hero">
+        <h1>How can we help?</h1>
+        <p>We're here to make sure ProveMeWrong works perfectly for you.</p>
+    </div>
+
+    <!-- Contact Methods -->
+    <div class="contact-card">
+        <h2>Get in Touch</h2>
+        <p>Choose the best way to reach us. We typically respond within 24 hours.</p>
+        <div class="contact-methods">
+            <div class="contact-method">
+                <div class="icon">✉️</div>
+                <h3>Email Us</h3>
+                <p>For general inquiries</p>
+                <a href="mailto:brandon@celestibless.com">brandon@celestibless.com</a>
+            </div>
+            <div class="contact-method">
+                <div class="icon">🐛</div>
+                <h3>Report a Bug</h3>
+                <p>Found something broken?</p>
+                <a href="mailto:brandon@celestibless.com?subject=Bug%20Report%20-%20ProveMeWrong">Send Report</a>
+            </div>
+            <div class="contact-method">
+                <div class="icon">💡</div>
+                <h3>Feature Request</h3>
+                <p>Have an idea?</p>
+                <a href="mailto:brandon@celestibless.com?subject=Feature%20Request%20-%20ProveMeWrong">Share It</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="contact-form" id="contact-form">
+        <h2>Send Us a Message</h2>
+        <div id="form-fields">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="topic">Topic</label>
+                <select id="topic">
+                    <option value="general">General Inquiry</option>
+                    <option value="bug">Bug Report</option>
+                    <option value="account">Account Issue</option>
+                    <option value="subscription">Subscription / Billing</option>
+                    <option value="feature">Feature Request</option>
+                    <option value="privacy">Privacy / Data Request</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" placeholder="Describe your issue or question..." required></textarea>
+            </div>
+            <button class="form-submit" onclick="submitForm()">Send Message</button>
+        </div>
+        <div class="form-success" id="form-success">
+            ✅ Thank you! We've received your message and will respond within 24 hours.
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">How do I create an account?</div>
+            <div class="faq-a"><div class="faq-a-inner">Download ProveMeWrong from the App Store, open the app, and tap "Sign Up." You can register with your email address or use Sign in with Apple for a quick setup.</div></div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">How do I cancel my subscription?</div>
+            <div class="faq-a"><div class="faq-a-inner">Go to your iPhone's Settings → Apple ID → Subscriptions → ProveMeWrong → Cancel Subscription. Your premium features will remain active until the end of the current billing period.</div></div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">Can I request a refund?</div>
+            <div class="faq-a"><div class="faq-a-inner">Since purchases are processed through the App Store, refund requests must be submitted to Apple directly. Visit <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a> to request a refund.</div></div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">How do I delete my account and data?</div>
+            <div class="faq-a"><div class="faq-a-inner">You can delete your account from within the app: go to Settings → Account → Delete Account. Alternatively, email us at brandon@celestibless.com and we'll process your request within 30 days.</div></div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">Is my data safe?</div>
+            <div class="faq-a"><div class="faq-a-inner">Yes. We use industry-standard encryption for data in transit and at rest. We never sell your personal data. Read our <a href="privacy.html">Privacy Policy</a> for full details.</div></div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">What platforms do you support?</div>
+            <div class="faq-a"><div class="faq-a-inner">ProveMeWrong is currently available for iOS (iPhone and iPad). We're exploring support for additional platforms in the future.</div></div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    &copy; 2025 CelestiBless Co., Ltd. All rights reserved.
+</footer>
+
+<script>
+function toggleFaq(el) {
+    const item = el.parentElement;
+    item.classList.toggle('open');
+}
+
+function submitForm() {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    if (!name || !email || !message) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+    // In production, connect to a backend or use mailto fallback
+    const topic = document.getElementById('topic').value;
+    const subject = encodeURIComponent(`[ProveMeWrong Support] ${topic}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}`);
+    window.location.href = `mailto:brandon@celestibless.com?subject=${subject}&body=${body}`;
+    document.getElementById('form-fields').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
